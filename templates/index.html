@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Stock Trend Visualizer</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>Stock Trend Visualizer</h1>
+    <form method="POST" action="/">
+      <label for="stock">Select a Stock:</label><br>
+      <select name="stock" id="stock" required>
+        <option value="" disabled selected>-- Select a stock --</option>
+        {% for stock in all_stocks %}
+          <option value="{{ stock }}">{{ stock }}</option>
+        {% endfor %}
+      </select><br><br>
+
+      <label for="chart_type">Select Chart Type:</label><br>
+      <select name="chart_type" id="chart_type" required>
+        <option value="line">Line Chart (with Moving Averages)</option>
+        <option value="candlestick">Candlestick</option>
+        <option value="bar">Bar Chart</option>
+        <option value="hist">Histogram</option>
+      </select><br><br>
+
+      <button type="submit">Visualize</button>
+    </form>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class="flash">
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+  </div>
+</body>
+</html>

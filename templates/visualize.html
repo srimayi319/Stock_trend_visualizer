@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Stock Visualization - {{ stock }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>Stock Trend for {{ stock }}</h1>
+    <a href="{{ url_for('index') }}" class="btn-back">← Back to Home</a>
+
+    <h2>Chart Type: {{ chart_type|capitalize }}</h2>
+    <div id="plot-container">
+      {{ plot_html | safe }}
+    </div>
+
+    <h3>Return on Investment (ROI)</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Stock</th>
+          <th>ROI (%)</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for s, roi in roi_info.items() %}
+          <tr>
+            <td>{{ s }}</td>
+            <td>{{ roi }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <h3>Latest OHLC</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Stock</th>
+          <th>Open</th>
+          <th>High</th>
+          <th>Low</th>
+          <th>Close</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for s, ohlc in ohlc_info.items() %}
+          <tr>
+            <td>{{ s }}</td>
+            <td>{{ ohlc.Open }}</td>
+            <td>{{ ohlc.High }}</td>
+            <td>{{ ohlc.Low }}</td>
+            <td>{{ ohlc.Close }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>
